@@ -1,0 +1,1 @@
+package org.osbook.jobstore.utils;import org.jboss.crypto.CryptoUtil;public class PasswordHash {	public static String getPasswordHash(String password) {		return CryptoUtil.createPasswordHash("MD5", CryptoUtil.BASE64_ENCODING,				null, null, password);	}	public static void main(String[] args) throws Exception {		System.out.println(getPasswordHash("admin"));	}}
