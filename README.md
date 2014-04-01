@@ -1,11 +1,11 @@
-# OpenShift Cookbook - Chapter 5 Sample Application#
+# OpenShift Cookbook - Chapter 7 Sample Application#
 
 A simple Job portal written using Java EE 6 and PostgreSQL 9.2.
 
 To run it on OpenShift, run the following command.
 
 ```
-$ rhc app-create jobstore jbosseap postgresql-9.2 --from-code https://github.com/OpenShift-Cookbook/chapter5-jobstore-security.git
+$ rhc app-create jobstore jbosseap postgresql-9.2 --from-code https://github.com/OpenShift-Cookbook/chapter7-jobstore-security.git
 ```
 
 Also create following tables and insert couple of records as shown below.
