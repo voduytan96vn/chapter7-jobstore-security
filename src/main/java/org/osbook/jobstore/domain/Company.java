@@ -21,12 +21,10 @@ import org.hibernate.validator.constraints.Email;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "Company.findAll", query = "SELECT NEW Company(c.id,c.name,c.description) FROM Company c"),
-	@NamedQuery(name = "Company.findByName", query = "SELECT NEW Company(c.id,c.name,c.description) FROM Company c WHERE c.name =:name"),
-	@NamedQuery(name = "Company.findById", query = "SELECT NEW Company(c.id,c.name,c.description) FROM Company c WHERE c.id =:id"),
-})
+		@NamedQuery(name = "Company.findAll", query = "SELECT NEW Company(c.id,c.name,c.description) FROM Company c"),
+		@NamedQuery(name = "Company.findByName", query = "SELECT NEW Company(c.id,c.name,c.description) FROM Company c WHERE c.name =:name"),
+		@NamedQuery(name = "Company.findById", query = "SELECT NEW Company(c.id,c.name,c.description) FROM Company c WHERE c.id =:id"), })
 public class Company {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -46,7 +44,7 @@ public class Company {
 	private String contactEmail;
 
 	@OneToMany(mappedBy = "company")
-	private final List<Job> jobs = new ArrayList<>();
+	private List<Job> jobs = new ArrayList<>();
 
 	@Column(updatable = false)
 	@NotNull
