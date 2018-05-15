@@ -58,11 +58,11 @@
 			$.ajax('api/v1/patients/' + this.patientId, {
 				mothod : 'GET',
 				success : function(data) {
-					function(json) {
+					_.each(data, function(json) {
 						var patientHTML = Mustache.to_html(
 								template("patient-form"), json);
 						$("#patientView").append(patientHTML);
-					}
+					});
 				}
 			});
 		}
