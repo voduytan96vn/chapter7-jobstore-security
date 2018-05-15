@@ -60,7 +60,7 @@
 				success : function(data) {
 					_.each(data, function(json) {
 						var patientHTML = Mustache.to_html(
-								template("patient-form"), json);
+								template("patient-info"), json);
 						$("#patientView").append(patientHTML);
 					});
 				}
