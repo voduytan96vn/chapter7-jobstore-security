@@ -8,15 +8,15 @@
 
 	JobStore.IndexView = Backbone.View.extend({
 		render : function() {
-			$.ajax('api/v1/companies',{
+			$.ajax('api/v1/patients',{
 				method :'GET',
 				success : function(data){
-					$("#companies").empty();
-					$("#companyView").empty();
+					$("#patients").empty();
+					$("#patientView").empty();
 					if(null != data){
 						_.each(data,function(json){
-							var companyHTML = Mustache.to_html(template("company"), json);
-                            $("#companies").append(companyHTML);
+							var patientHTML = Mustache.to_html(template("patient"), json);
+                            $("#patients").append(patientHTML);
 						});
 					}
 				}
@@ -24,20 +24,20 @@
 		}
 	});
 	
-	JobStore.JobView = Backbone.View.extend({
+	JobStore.AllergyView = Backbone.View.extend({
 		initialize : function(options){
-			this.companyId = options.companyId;
+			this.patientId = options.patientId;
 		},
 		render : function(){
-			$("#companyView").empty();
-			$("#companyView").html(Mustache.to_html(template("jobs"), {companyId:this.companyId}));
-			$.ajax('api/v1/companies/'+this.companyId+'/jobs',{
+			$("#patientView").empty();
+			$("#patientView").html(Mustache.to_html(template("allergies"), {patientId:this.patientId}));
+			$.ajax('api/v1/patients/'+this.patientId+'/allergies',{
 				method : 'GET',
 				success : function(data){
 					if(null != data){
 						_.each(data, function(json){
-							var jobHTML = Mustache.to_html(template("job"), json);
-                            $("#companyView").append(jobHTML);
+							var allergyHTML = Mustache.to_html(template("allergy"), json);
+                            $("#patientView").append(allergyHTML);
 						});
 					}
 				}
@@ -45,18 +45,18 @@
 		}
 	});
 	
-	JobStore.CompanyFormView = Backbone.View.extend({
+	JobStore.PatientFormView = Backbone.View.extend({
 		el : $("body"),
 		events :{
-			'submit': 'saveCompany'
+			'submit': 'savePatient'
 		},
 		render : function(){
-			$("#companyView").html(template("company-form"));
+			$("#patientView").html(template("patient-form"));
 			return this;
 		},
 		
-		saveCompany : function(event){
-			console.log('in saveCompany()');
+		savePatient : function(event){
+			console.log('in savePatient()');
 			event.preventDefault();
 			var name = $('input[name=name]').val();
 			var description = $('#description').val();
@@ -68,7 +68,7 @@
 				};
 			$.ajax({
 			    type: "POST",
-			    url: "api/v1/companies",
+			    url: "api/v1/patients",
 			    data: JSON.stringify(data),
 			    contentType: "application/json; charset=utf-8",
 			    dataType: "json",
@@ -85,44 +85,42 @@
 		}
 	});
 	
-	JobStore.JobFormView = Backbone.View.extend({
+	JobStore.AllergyFormView = Backbone.View.extend({
 		el : $("body"),
 		
 		initialize : function(options){
-			this.companyId = options.companyId;
+			this.patientId = options.patientId;
 		},
 		
 		events :{
-			'submit' : 'saveJob'
+			'submit' : 'saveAllergy'
 		},
 		
 		render : function(){
-			$("#companyView").html(Mustache.to_html(template("jobs"), {companyId:this.companyId}));
-			$("#companyView").append(template("job-form"));
+			$("#patientView").html(Mustache.to_html(template("allergies"), {patientId:this.patientId}));
+			$("#patientView").append(template("allergy-form"));
 			return this;
 		},
 		
-		saveJob : function(event){
-			console.log('in saveJob()');
+		saveAllergy : function(event){
+			console.log('in saveAllergy()');
 			event.preventDefault();
 			var title = $('input[name=title]').val();
 			var description = $('#description').val();
-			var skills = $('input[name=skills]').val();
 			var data = {
 					title: title,
-					description : description,
-					skills: skills.split(",")
+					description : description
 				};
-			var that = this;
+
 			$.ajax({
 			    type: "POST",
-			    url: "api/v1/companies/"+this.companyId+"/jobs",
+			    url: "api/v1/patients/"+this.patientId+"/allergies",
 			    data: JSON.stringify(data),
 			    contentType: "application/json; charset=utf-8",
 			    dataType: "json",
 			    success: function(data, textStatus, jqXHR){
 			    	console.log(data);
-			    	router.navigate("companies/"+that.companyId+"/jobs",{trigger:true})
+			    	router.navigate("patients/"+this.patientId+"/allergies",{trigger:true})
 			    },
 			    error: function(jqXHR, textStatus, errorThrown) {
 			        console.log(jqXHR);
@@ -138,11 +136,11 @@
 		currentView : null,
 
 		routes : {
-			"" : "showAllCompanies",
-			"home":"showAllCompanies",
-			"companies/:companyId/jobs" : "listJobsForCompany",
-			"companies/new":"newCompany",
-			"companies/:companyId/jobs/new":"newJob"
+			"" : "showAllPatients",
+			"home":"showAllPatients",
+			"patients/:patientId/allergies" : "listAllergiesForPatient",
+			"patients/new":"newPatient",
+			"patients/:patientId/allergies/new":"newAllergy"
 		},
 
 		changeView : function(view) {
@@ -154,23 +152,24 @@
 			this.currentView.render();
 		},
 
-		showAllCompanies : function() {
-			console.log("in showAllCompanies()...");
+		showAllPatients : function() {
+			console.log("in showAllPatients()...");
 			this.changeView(new JobStore.IndexView());
 		},
 
-		listJobsForCompany : function(companyId) {
-			console.log("in jobsForACompany()...");
-			this.changeView(new JobStore.JobView({companyId : companyId}));
-		},
-		newCompany : function(){
-			console.log("in newCompany()...");
-			this.changeView(new JobStore.CompanyFormView());
+		listAllergiesForPatient : function(patientId) {
+			console.log("in allergiesForAPatient()...");
+			this.changeView(new JobStore.AllergyView({patientId : patientId}));
 		},
 		
-		newJob : function(companyId){
-			console.log("in newJob()...");
-			this.changeView(new JobStore.JobFormView({companyId : companyId}));
+		newPatient : function(){
+			console.log("in newPatient()...");
+			this.changeView(new JobStore.PatientFormView());
+		},
+		
+		newAllergy : function(patientId){
+			console.log("in newAllergy()...");
+			this.changeView(new JobStore.AllergyFormView({patientId : patientId}));
 		}
 	});
 

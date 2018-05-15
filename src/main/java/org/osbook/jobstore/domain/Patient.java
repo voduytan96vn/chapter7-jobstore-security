@@ -21,10 +21,10 @@ import org.hibernate.validator.constraints.Email;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Company.findAll", query = "SELECT NEW Company(c.id,c.name,c.description) FROM Company c"),
-		@NamedQuery(name = "Company.findByName", query = "SELECT NEW Company(c.id,c.name,c.description) FROM Company c WHERE c.name =:name"),
-		@NamedQuery(name = "Company.findById", query = "SELECT NEW Company(c.id,c.name,c.description) FROM Company c WHERE c.id =:id"), })
-public class Company {
+		@NamedQuery(name = "Patient.findAll", query = "SELECT NEW Patient(c.id,c.name,c.description) FROM Patient c"),
+		@NamedQuery(name = "Patient.findByName", query = "SELECT NEW Patient(c.id,c.name,c.description) FROM Patient c WHERE c.name =:name"),
+		@NamedQuery(name = "Patient.findById", query = "SELECT NEW Patient(c.id,c.name,c.description) FROM Patient c WHERE c.id =:id"), })
+public class Patient {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -43,24 +43,24 @@ public class Company {
 	@Email
 	private String contactEmail;
 
-	@OneToMany(mappedBy = "company")
-	private List<Job> jobs = new ArrayList<>();
+	@OneToMany(mappedBy = "patient")
+	private List<Allergy> allergies = new ArrayList<>();
 
 	@Column(updatable = false)
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date registeredOn = new Date();
 
-	public Company() {
+	public Patient() {
 	}
 
-	public Company(String name, String description, String contactEmail) {
+	public Patient(String name, String description, String contactEmail) {
 		this.name = name;
 		this.description = description;
 		this.contactEmail = contactEmail;
 	}
 
-	public Company(Long id, String name, String description) {
+	public Patient(Long id, String name, String description) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -107,8 +107,12 @@ public class Company {
 		this.registeredOn = registeredOn;
 	}
 
-	public List<Job> getJobs() {
-		return jobs;
+	public List<Allergy> getAllergies() {
+		return allergies;
+	}
+
+	public void setAllergies(List<Allergy> allergies) {
+		this.allergies = allergies;
 	}
 
 }

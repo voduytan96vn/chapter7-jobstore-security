@@ -21,11 +21,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "Job.findAllByCompany", query = "SELECT NEW Job(j, c.id, c.name,c.description) FROM Job j JOIN j.company c WHERE j.company =:company"),
-	@NamedQuery(name = "Job.findById",query="SELECT NEW Job(j.id,j.title,j.description) FROM Job j WHERE j.id =:jobId")
-	
+		@NamedQuery(name = "Allergy.findAllByPatient", query = "SELECT NEW Allergy(j, c.id, c.name,c.description) FROM Allergy j JOIN j.patient c WHERE j.patient =:patient"),
+		@NamedQuery(name = "Allergy.findById", query = "SELECT NEW Allergy(j.id,j.title,j.description) FROM Allergy j WHERE j.id =:allergyId")
 })
-public class Job {
+public class Allergy {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,31 +49,31 @@ public class Job {
 
 	@ManyToOne
 	@NotNull
-	private Company company;
+	private Patient patient;
 
-	public Job() {
+	public Allergy() {
 	}
 
-	public Job(Long id, String title, String description) {
+	public Allergy(Long id, String title, String description) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 	}
-	
-	public Job(String title, String description, boolean filled) {
+
+	public Allergy(String title, String description, boolean filled) {
 		this.title = title;
 		this.description = description;
 		this.filled = filled;
 	}
 
-	public Job(Job job, long id, String name, String description) {
+	public Allergy(Allergy job, long id, String name, String description) {
 		this.id = job.id;
 		this.title = job.title;
 		this.description = job.description;
 		this.filled = job.filled;
 		this.submissionDate = job.submissionDate;
 		this.skills = job.skills;
-		this.company = new Company(id, name, description);
+		this.patient = new Patient(id, name, description);
 	}
 
 	public Long getId() {
@@ -117,12 +116,12 @@ public class Job {
 		this.skills = skills;
 	}
 
-	public Company getCompany() {
-		return company;
+	public Patient getPatient() {
+		return patient;
 	}
 
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	public Date getSubmissionDate() {
