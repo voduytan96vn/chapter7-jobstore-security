@@ -119,6 +119,8 @@
 				title : title,
 				description : description
 			};
+			console.log(data);
+			console.log('patient id: ' + this.patientId);
 			var that = this;
 			$.ajax({
 				type : "POST",
