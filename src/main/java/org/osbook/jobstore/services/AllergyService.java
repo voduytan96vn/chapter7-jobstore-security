@@ -23,7 +23,7 @@ public class AllergyService {
 	public Allergy save(Long patientId, Allergy allergy) {
 		Patient patient = patientService.findById(patientId);
 		System.out.println("Save Patient Name" + patient.getName());
-		allergy.setPatient(patient);
+		//allergy.setPatient(patient);
 		patient.getAllergies().add(allergy);
 		entityManager.persist(allergy);
 		System.out.println("Allergy Name" + allergy.getTitle());

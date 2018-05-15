@@ -37,9 +37,9 @@ public class Allergy {
 	@NotNull
 	private Date submissionDate = new Date();
 
-	@ManyToOne
-	@NotNull
-	private Patient patient;
+	// @ManyToOne
+	// @NotNull
+	// private Patient patient;
 
 	public Allergy() {
 	}
@@ -49,11 +49,18 @@ public class Allergy {
 		this.id = id;
 		this.title = title;
 		this.description = description;
+		System.out.println("Allergy a");
+		System.out.println(id);
+		System.out.println(title);
+		System.out.println(description);
 	}
 
 	public Allergy(String title, String description) {
 		this.title = title;
 		this.description = description;
+		System.out.println("Allergy b");
+		System.out.println(title);
+		System.out.println(description);
 	}
 
 	public Allergy(Allergy allergy, long id, String name, String description) {
@@ -61,7 +68,15 @@ public class Allergy {
 		this.title = allergy.title;
 		this.description = allergy.description;
 		this.submissionDate = allergy.submissionDate;
-		this.patient = new Patient(id, name, description);
+		// this.patient = new Patient(id, name, description);
+		System.out.println("Allergy c");
+		System.out.println(allergy.id);
+		System.out.println(allergy.title);
+		System.out.println(allergy.description);
+		System.out.println(allergy.submissionDate);
+		System.out.println(id);
+		System.out.println(name);
+		System.out.println(description);
 	}
 
 	public Long getId() {
@@ -86,14 +101,6 @@ public class Allergy {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
 	}
 
 	public Date getSubmissionDate() {
