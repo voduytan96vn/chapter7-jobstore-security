@@ -49,6 +49,23 @@
 		}
 	});
 
+	JobStore.InfoPatient = Backbone.View.extend({
+		initialize : function(options) {
+			this.patientId = options.patientId;
+		},
+		render : function() {
+			$("#patientView").empty();
+			$.ajax('api/v1/patients/' + this.patientId, {
+				mothod : 'GET',
+				success : function(data) {
+					var patientHTML = Mustache.to_html(template("patient-info"),
+							json);
+					$("#patientView").append(patientHTML);
+				}
+			});
+		}
+	});
+
 	JobStore.PatientFormView = Backbone.View.extend({
 		el : $("body"),
 		events : {
@@ -119,8 +136,6 @@
 				title : title,
 				description : description
 			};
-			console.log(data);
-			console.log('patient id: ' + this.patientId);
 			var that = this;
 			$.ajax({
 				type : "POST",
@@ -153,6 +168,7 @@
 			"home" : "showAllPatients",
 			"patients/:patientId/allergies" : "listAllergiesForPatient",
 			"patients/new" : "newPatient",
+			"patients/:patientId" : "showInfoPatient",
 			"patients/:patientId/allergies/new" : "newAllergy"
 		},
 
@@ -185,6 +201,13 @@
 		newAllergy : function(patientId) {
 			console.log("in newAllergy()...");
 			this.changeView(new JobStore.AllergyFormView({
+				patientId : patientId
+			}));
+		},
+
+		showInfoPatient : function(patientId) {
+			console.log("in InfoPatient()...");
+			this.changeView(new JobStore.InfoPatient({
 				patientId : patientId
 			}));
 		}

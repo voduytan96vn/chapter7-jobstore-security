@@ -17,7 +17,6 @@ public class PatientService {
 	private EntityManager entityManager;
 
 	public Patient save(Patient patient) {
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa                                         ");
 		entityManager.persist(patient);
 		return patient;
 	}

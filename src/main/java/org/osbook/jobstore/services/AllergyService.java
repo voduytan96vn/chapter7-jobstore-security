@@ -4,21 +4,20 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 
-import org.osbook.jobstore.domain.Patient;
 import org.osbook.jobstore.domain.Allergy;
+import org.osbook.jobstore.domain.Patient;
 
 @Stateless
 public class AllergyService {
 
 	@PersistenceContext(unitName = "jobstore")
 	private EntityManager entityManager;
-	@Inject
-	private PatientService patientService;
+	//@Inject
+	//private PatientService patientService;
 
 	public Allergy save(Long patientId, Allergy allergy) {
 		//Patient patient = patientService.findById(patientId);
