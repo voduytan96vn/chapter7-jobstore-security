@@ -30,8 +30,6 @@
 			this.patientId = options.patientId;
 		},
 		render : function() {
-			console.log("AllergyView");
-			console.log("patient ID" + this.patientId);
 			$("#patientView").empty();
 			$("#patientView").html(Mustache.to_html(template("allergies"), {
 				patientId : this.patientId
