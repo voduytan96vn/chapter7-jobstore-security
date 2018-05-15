@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.Email;
 @NamedQueries({
 		@NamedQuery(name = "Patient.findAll", query = "SELECT NEW Patient(c.id,c.name,c.description) FROM Patient c"),
 		@NamedQuery(name = "Patient.findByName", query = "SELECT NEW Patient(c.id,c.name,c.description) FROM Patient c WHERE c.name =:name"),
-		@NamedQuery(name = "Patient.findById", query = "SELECT NEW Patient(c.id,c.name,c.description) FROM Patient c WHERE c.id =:id"), })
+		@NamedQuery(name = "Patient.findById", query = "SELECT NEW Patient(c.id,c.name,c.description) FROM Patient c WHERE c.id =:id") })
 public class Patient {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,13 +1,9 @@
 package org.osbook.jobstore.domain;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,8 +18,7 @@ import javax.validation.constraints.Size;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Allergy.findAllByPatient", query = "SELECT NEW Allergy(j, c.id, c.name,c.description) FROM Allergy j JOIN j.patient c WHERE j.patient =:patient"),
-		@NamedQuery(name = "Allergy.findById", query = "SELECT NEW Allergy(j.id,j.title,j.description) FROM Allergy j WHERE j.id =:allergyId")
-})
+		@NamedQuery(name = "Allergy.findById", query = "SELECT NEW Allergy(j.id,j.title,j.description) FROM Allergy j WHERE j.id =:allergyId") })
 public class Allergy {
 
 	@Id
@@ -44,9 +39,6 @@ public class Allergy {
 
 	private boolean filled = false;
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	private Set<String> skills = new HashSet<>();
-
 	@ManyToOne
 	@NotNull
 	private Patient patient;
@@ -66,13 +58,12 @@ public class Allergy {
 		this.filled = filled;
 	}
 
-	public Allergy(Allergy job, long id, String name, String description) {
-		this.id = job.id;
-		this.title = job.title;
-		this.description = job.description;
-		this.filled = job.filled;
-		this.submissionDate = job.submissionDate;
-		this.skills = job.skills;
+	public Allergy(Allergy allergy, long id, String name, String description) {
+		this.id = allergy.id;
+		this.title = allergy.title;
+		this.description = allergy.description;
+		this.filled = allergy.filled;
+		this.submissionDate = allergy.submissionDate;
 		this.patient = new Patient(id, name, description);
 	}
 
@@ -106,14 +97,6 @@ public class Allergy {
 
 	public void setFilled(boolean filled) {
 		this.filled = filled;
-	}
-
-	public Set<String> getSkills() {
-		return skills;
-	}
-
-	public void setSkills(Set<String> skills) {
-		this.skills = skills;
 	}
 
 	public Patient getPatient() {
