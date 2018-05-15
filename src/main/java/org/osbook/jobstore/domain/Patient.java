@@ -1,8 +1,6 @@
 package org.osbook.jobstore.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -42,9 +39,6 @@ public class Patient {
 	@NotNull
 	@Email
 	private String contactEmail;
-
-	@OneToMany(mappedBy = "patient")
-	private List<Allergy> allergies = new ArrayList<>();
 
 	@Column(updatable = false)
 	@NotNull
@@ -105,14 +99,6 @@ public class Patient {
 
 	public void setRegisteredOn(Date registeredOn) {
 		this.registeredOn = registeredOn;
-	}
-
-	public List<Allergy> getAllergies() {
-		return allergies;
-	}
-
-	public void setAllergies(List<Allergy> allergies) {
-		this.allergies = allergies;
 	}
 
 }

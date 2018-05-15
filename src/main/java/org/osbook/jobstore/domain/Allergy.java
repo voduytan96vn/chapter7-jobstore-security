@@ -4,9 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -40,6 +42,12 @@ public class Allergy {
 	// @ManyToOne
 	// @NotNull
 	// private Patient patient;
+	@Column(name = "patient_id")
+	private Long patientId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "patient_id", referencedColumnName = "id", insertable = false, updatable = false)
+	private Patient patient;
 
 	public Allergy() {
 	}
@@ -68,7 +76,7 @@ public class Allergy {
 		this.title = allergy.title;
 		this.description = allergy.description;
 		this.submissionDate = allergy.submissionDate;
-		// this.patient = new Patient(id, name, description);
+		this.patient = new Patient(id, name, description);
 		System.out.println("Allergy c");
 		System.out.println(allergy.id);
 		System.out.println(allergy.title);
@@ -101,6 +109,22 @@ public class Allergy {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Long getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(Long patientId) {
+		this.patientId = patientId;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	public Date getSubmissionDate() {
