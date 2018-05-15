@@ -37,8 +37,6 @@ public class Allergy {
 	@NotNull
 	private Date submissionDate = new Date();
 
-	private boolean filled = false;
-
 	@ManyToOne
 	@NotNull
 	private Patient patient;
@@ -47,22 +45,21 @@ public class Allergy {
 	}
 
 	public Allergy(Long id, String title, String description) {
+		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
 	}
 
-	public Allergy(String title, String description, boolean filled) {
+	public Allergy(String title, String description) {
 		this.title = title;
 		this.description = description;
-		this.filled = filled;
 	}
 
 	public Allergy(Allergy allergy, long id, String name, String description) {
 		this.id = allergy.id;
 		this.title = allergy.title;
 		this.description = allergy.description;
-		this.filled = allergy.filled;
 		this.submissionDate = allergy.submissionDate;
 		this.patient = new Patient(id, name, description);
 	}
@@ -91,14 +88,6 @@ public class Allergy {
 		this.description = description;
 	}
 
-	public boolean isFilled() {
-		return filled;
-	}
-
-	public void setFilled(boolean filled) {
-		this.filled = filled;
-	}
-
 	public Patient getPatient() {
 		return patient;
 	}
@@ -109,6 +98,10 @@ public class Allergy {
 
 	public Date getSubmissionDate() {
 		return submissionDate;
+	}
+
+	public void setSubmissionDate(Date submissionDate) {
+		this.submissionDate = submissionDate;
 	}
 
 }
